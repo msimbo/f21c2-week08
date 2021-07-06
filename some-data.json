@@ -1,0 +1,10 @@
+{
+  "name": "DO",
+  "location": "Earth",
+  "number": 1,
+  "someOtherThing": {
+    "some": "A String",
+    "other": true,
+    "thing": []
+  }
+}
