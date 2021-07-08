@@ -10,8 +10,37 @@
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
 </head>
 <body>
+<div class="p-24">
 
-<h1>Welcome</h1>
+    <div>
+        <p id="display-rate"> 1 USD is <span class="text-3xl">5454 EUR</span></p>
+    </div>
+
+    <!-- base currency -->
+    <div>
+        <input type="number" name="base-amount" id="base-amount" value="1">
+
+        <select name="base-currency" id="base-currency">
+            <option value="USD">USD</option>
+            <option value="GBP">GBP</option>
+            <option value="JPY">JPY</option>
+            <option value="EUR">EUR</option>
+        </select>
+    </div>
+
+    <!-- dest currency -->
+    <div>
+        <input type="number" name="dest-amount" id="dest-amount">
+
+        <select name="dest-currency" id="dest-currency">
+            <option value="USD">USD</option>
+            <option value="GBP">GBP</option>
+            <option value="JPY">JPY</option>
+            <option value="EUR" selected>EUR</option>
+        </select>
+    </div>
+</div>
+
 <script src="app.js"></script>
 </body>
 </html>

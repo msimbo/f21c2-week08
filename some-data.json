@@ -3,7 +3,7 @@
   "location": "Earth",
   "number": 1,
   "someOtherThing": {
-    "some": "A String",
+    "myString": "A String",
     "other": true,
     "thing": []
   }

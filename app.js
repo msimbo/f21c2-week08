@@ -1,17 +1,14 @@
-const fetchInput = 'github.json';
+// Variables
+const displayRate = document.querySelector('#display-rate');
 
-//@TODO: play with GH's API {}
-//@TODO: build our app with an API...
+const baseAmount = document.querySelector('#base-amount');
+const baseCurrency = document.querySelector('#base-currency');
 
-// > block 1
-fetch(fetchInput)
-    .then(res => res.json())
-    .then(content => {
-        console.log(content);
-    });
+const destCurrency = document.querySelector('#dest-currency');
+const destAmount = document.querySelector('#dest-amount');
 
-// > block 2
-const myData = 'some string'; //string
+// console.log(baseCurrency);
 
-// >  block 3
-console.log(myData);
+// functions
+
+// Event Listeners
