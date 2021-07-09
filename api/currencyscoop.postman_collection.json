@@ -1,0 +1,124 @@
+{
+	"info": {
+		"_postman_id": "2ba3ce3f-34fe-4a17-bedd-f41da07d4e6e",
+		"name": "currencyscoop",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "/timeseries",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.currencyscoop.com/v1/timeseries?api_key=a00ec093a0dfafe2ae27954db000de4c&start_date=2021-01-01&end_date=2021-04-01&symbols=EUR",
+					"protocol": "https",
+					"host": [
+						"api",
+						"currencyscoop",
+						"com"
+					],
+					"path": [
+						"v1",
+						"timeseries"
+					],
+					"query": [
+						{
+							"key": "api_key",
+							"value": "a00ec093a0dfafe2ae27954db000de4c"
+						},
+						{
+							"key": "base",
+							"value": "USD",
+							"disabled": true
+						},
+						{
+							"key": "start_date",
+							"value": "2021-01-01"
+						},
+						{
+							"key": "end_date",
+							"value": "2021-04-01"
+						},
+						{
+							"key": "symbols",
+							"value": "EUR"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/convert",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.currencyscoop.com/v1/convert?api_key=a00ec093a0dfafe2ae27954db000de4c&from=USD&to=EUR&amount=40",
+					"protocol": "https",
+					"host": [
+						"api",
+						"currencyscoop",
+						"com"
+					],
+					"path": [
+						"v1",
+						"convert"
+					],
+					"query": [
+						{
+							"key": "api_key",
+							"value": "a00ec093a0dfafe2ae27954db000de4c"
+						},
+						{
+							"key": "base",
+							"value": "USD",
+							"disabled": true
+						},
+						{
+							"key": "from",
+							"value": "USD"
+						},
+						{
+							"key": "to",
+							"value": "EUR"
+						},
+						{
+							"key": "amount",
+							"value": "40"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/latest",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.currencyscoop.com/v1/latest?api_key=a00ec093a0dfafe2ae27954db000de4c",
+					"protocol": "https",
+					"host": [
+						"api",
+						"currencyscoop",
+						"com"
+					],
+					"path": [
+						"v1",
+						"latest"
+					],
+					"query": [
+						{
+							"key": "api_key",
+							"value": "a00ec093a0dfafe2ae27954db000de4c"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
