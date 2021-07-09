@@ -13,14 +13,18 @@
 <div class="p-24">
 
     <div>
-        <p id="display-rate"> 1 USD is <span class="text-3xl">5454 EUR</span></p>
+        <p id="display-rate"></p>
     </div>
 
     <!-- base currency -->
     <div>
-        <input type="number" name="base-amount" id="base-amount" value="1">
+        <input type="number" name="from-amount" id="from-amount" value="1"
+               class="border-2"
+        >
 
-        <select name="base-currency" id="base-currency">
+        <select name="from-currency" id="from-currency"
+                class="border-2"
+        >
             <option value="USD">USD</option>
             <option value="GBP">GBP</option>
             <option value="JPY">JPY</option>
@@ -30,9 +34,12 @@
 
     <!-- dest currency -->
     <div>
-        <input type="number" name="dest-amount" id="dest-amount">
+        <input type="number" name="to-amount" id="to-amount"
+               class="border-2"
+        >
 
-        <select name="dest-currency" id="dest-currency">
+        <select name="to-currency" id="to-currency"
+                class="border-2">
             <option value="USD">USD</option>
             <option value="GBP">GBP</option>
             <option value="JPY">JPY</option>
