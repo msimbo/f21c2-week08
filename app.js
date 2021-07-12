@@ -10,28 +10,62 @@ const toAmount = document.querySelector('#to-amount');
 const API_KEY = 'a00ec093a0dfafe2ae27954db000de4c';
 const API_URL = `https://api.currencyscoop.com/v1/latest?api_key=${API_KEY}`;
 
-// functions
-// 1. Loads the page and calculates the fx based on the current value
+/**
+ * Grabs thethe API
+ */
 function calculate(){
-    // 2. get the respective amounts (from the input box)
-    // const currencyFrom = fromCurrency.value;
-    const currencyTo = toCurrency.value;
 
+    const currencyTo = toCurrency.value;
     const amountFrom = fromAmount.value;
 
-    // 2b. Send to the API (*/convert?&from=`fromCurr`&to=`toCurr`&amount=`toAmount`)
-    fetch(API_URL)
-        .then(response => response.json())
-        .then(data => {
-            const rate = data.response.rates[ currencyTo ];
+    const rates = localStorage.getItem('rates');
 
-            // 3. Give user feedback based on the API data [on dynamic input change]
-            displayRate.innerHTML = `1 USD is <span class="text-3xl">${rate} ${currencyTo}</span>`;
 
-            // 3b. when a user changes the fromAmount, update the toAmount (in the input box
-            toAmount.value = rate * amountFrom;
-        });
+    // Stringed version
+    console.log(rates);
+    console.log(`Last Updated @ ${localStorage.getItem('last_updated')}`);
+
+    // converted to look API-version
+    console.log(JSON.parse(rates));
+    const oldRates = JSON.parse(rates);
+    console.log(`AED Rate: ${oldRates[ 'AED' ]} `);
+
+    // ASYNC CALL | React World
+    // fetch(API_URL)
+    //     .then(response => response.json())
+    //     .then(data => {
+    //
+    //         localStorage.setItem('rates', JSON.stringify(data.response.rates));
+    //         localStorage.setItem('last_updated', data.response.date);
+    //
+    //         // cache our results
+    //         // 0. localStorage APIm
+    //         // 1. localStorage.setItem('my_user',JSON.stringify({"first_name": "Jake"}))
+    //         // 2. const myUser = localStorage.getItem('my_user')
+    //         // 3. How it works.
+    //         // const user = JSON.parse(myUser) //returns Obj
+    //         // `Welcome back ${user.first_name}!`
+    //         // localStorage.setItem('someString','Another String')
+    //         // JSON -> Objects  to String and Vice Versa
+    //         // JSON.stringify({}) | JSON.parse({})
+    //
+    //         const rate = data.response.rates[ currencyTo ];
+    //         displayRate.innerHTML = `1 USD is <span class="text-3xl">${rate} ${currencyTo}</span>`;
+    //         toAmount.value = rate * amountFrom;
+    //
+    //     });
 }
+
+// Only call calculate() on a different day-ish
+function runCalculation(){
+
+
+    if(true){
+        calculate();
+    }
+}
+
+// if(day is different //boolean) calculate()
 
 // Event Listeners
 fromCurrency.addEventListener('change', calculate);
