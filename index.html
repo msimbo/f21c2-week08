@@ -8,43 +8,50 @@
     <title>Our Google Currency Copycat</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.4/tailwind.min.css"
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.4.1/chart.min.js"
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 <body>
 <div class="p-24">
-
     <div>
-        <p id="display-rate"></p>
+        <div>
+            <p id="display-rate"></p>
+        </div>
+
+        <!-- base currency -->
+        <div>
+            <input type="number" name="from-amount" id="from-amount" value="1"
+                   class="border-2"
+            >
+
+            <select name="from-currency" id="from-currency"
+                    class="border-2"
+            >
+                <option value="USD">USD</option>
+                <option value="GBP">GBP</option>
+                <option value="JPY">JPY</option>
+                <option value="EUR">EUR</option>
+            </select>
+        </div>
+
+        <!-- dest currency -->
+        <div>
+            <input type="number" name="to-amount" id="to-amount"
+                   class="border-2"
+            >
+
+            <select name="to-currency" id="to-currency"
+                    class="border-2">
+                <option value="USD">USD</option>
+                <option value="GBP">GBP</option>
+                <option value="JPY">JPY</option>
+                <option value="EUR" selected>EUR</option>
+            </select>
+        </div>
     </div>
 
-    <!-- base currency -->
     <div>
-        <input type="number" name="from-amount" id="from-amount" value="1"
-               class="border-2"
-        >
-
-        <select name="from-currency" id="from-currency"
-                class="border-2"
-        >
-            <option value="USD">USD</option>
-            <option value="GBP">GBP</option>
-            <option value="JPY">JPY</option>
-            <option value="EUR">EUR</option>
-        </select>
-    </div>
-
-    <!-- dest currency -->
-    <div>
-        <input type="number" name="to-amount" id="to-amount"
-               class="border-2"
-        >
-
-        <select name="to-currency" id="to-currency"
-                class="border-2">
-            <option value="USD">USD</option>
-            <option value="GBP">GBP</option>
-            <option value="JPY">JPY</option>
-            <option value="EUR" selected>EUR</option>
-        </select>
+        <canvas id="chart"></canvas>
     </div>
 </div>
 

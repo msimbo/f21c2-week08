@@ -10,6 +10,9 @@ const toAmount = document.querySelector('#to-amount');
 const API_KEY = 'a00ec093a0dfafe2ae27954db000de4c';
 const API_URL = `https://api.currencyscoop.com/v1/latest?api_key=${API_KEY}`;
 
+
+const chartContext = document.querySelector('#chart').getContext('2d');
+
 /**
  * Gets new data from FX API
  *
@@ -49,20 +52,21 @@ async function calculate(){
     let updatedDate = ( new Date(LSUpdatedDate) ).getDate();
     let todaysDate = ( new Date() ).getDate(); //13
 
-    if(todaysDate !== updatedDate){
+    // if(todaysDate !== updatedDate){
 
         exchangeRateData = await fetchRateData(); // get data from Live API
 
-        console.log(`pulling from LIVE API`);
+        // console.log(`pulling from LIVE API`);
 
-    } else{
+    // } else{
 
-        exchangeRateData = JSON.parse(localStorage.getItem('fx_rates_data'));
+        // exchangeRateData = JSON.parse(localStorage.getItem('fx_rates_data'));
 
-        console.log(`pulling from Cached API`);
+        // console.log(`pulling from Cached API`);
 
-    }
+    // }
 
+    console.log(exchangeRateData);
     const rate = exchangeRateData [ currencyTo ];
 
     displayRate.innerHTML = `1 USD is <span class="text-3xl">${rate.toFixed(2)} ${currencyTo}</span>`;
@@ -79,3 +83,21 @@ toAmount.addEventListener('input', calculate);
 
 
 calculate();
+
+////////
+const FXLabelData = ['2021-07-10', '2021-07-11', '2021-07-12','2021-07-13']; //
+const FXRatesData = [0.24, 0.85, 0.76, 0.9]; //
+
+
+// for external ref: https://jsitor.com/qyh7W03iF
+const FXChart = new Chart(chartContext, {
+    type: 'line',
+    data: {
+        labels: FXLabelData,
+        datasets: [{
+            label: `FX Rates for EUR`,
+            data: FXRatesData,
+        }],
+        borderWidth: 1
+    }
+});
