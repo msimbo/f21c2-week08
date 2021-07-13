@@ -11,61 +11,64 @@ const API_KEY = 'a00ec093a0dfafe2ae27954db000de4c';
 const API_URL = `https://api.currencyscoop.com/v1/latest?api_key=${API_KEY}`;
 
 /**
- * Grabs thethe API
+ * Gets new data from FX API
+ *
+ * @returns {{}} - the exchange rate payload
  */
-function calculate(){
+async function fetchRateData(){
+    let fxData = {};
+
+    const response = await fetch(API_URL);
+    const newRes = await response.json();
+
+    fxData = newRes.response;
+
+    localStorage.setItem('fx_rates_data', JSON.stringify(fxData.rates));
+    localStorage.setItem('fx_last_updated_date', fxData.date);
+
+    return fxData;
+}
+
+
+// setLocalStorage(key,value) // undefined | true | Exception
+
+// getLocalStorage(key) // {}
+
+/**
+ * Displays
+ */
+async function calculate(){
+    let exchangeRateData = {};
 
     const currencyTo = toCurrency.value;
     const amountFrom = fromAmount.value;
 
-    const rates = localStorage.getItem('rates');
+    const LSUpdatedDate = localStorage.getItem('fx_last_updated_date');
 
+    // caching rules
+    let updatedDate = ( new Date(LSUpdatedDate) ).getDate();
+    let todaysDate = ( new Date() ).getDate(); //13
 
-    // Stringed version
-    console.log(rates);
-    console.log(`Last Updated @ ${localStorage.getItem('last_updated')}`);
+    if(todaysDate !== updatedDate){
 
-    // converted to look API-version
-    console.log(JSON.parse(rates));
-    const oldRates = JSON.parse(rates);
-    console.log(`AED Rate: ${oldRates[ 'AED' ]} `);
+        exchangeRateData = await fetchRateData(); // get data from Live API
 
-    // ASYNC CALL | React World
-    // fetch(API_URL)
-    //     .then(response => response.json())
-    //     .then(data => {
-    //
-    //         localStorage.setItem('rates', JSON.stringify(data.response.rates));
-    //         localStorage.setItem('last_updated', data.response.date);
-    //
-    //         // cache our results
-    //         // 0. localStorage APIm
-    //         // 1. localStorage.setItem('my_user',JSON.stringify({"first_name": "Jake"}))
-    //         // 2. const myUser = localStorage.getItem('my_user')
-    //         // 3. How it works.
-    //         // const user = JSON.parse(myUser) //returns Obj
-    //         // `Welcome back ${user.first_name}!`
-    //         // localStorage.setItem('someString','Another String')
-    //         // JSON -> Objects  to String and Vice Versa
-    //         // JSON.stringify({}) | JSON.parse({})
-    //
-    //         const rate = data.response.rates[ currencyTo ];
-    //         displayRate.innerHTML = `1 USD is <span class="text-3xl">${rate} ${currencyTo}</span>`;
-    //         toAmount.value = rate * amountFrom;
-    //
-    //     });
-}
+        console.log(`pulling from LIVE API`);
 
-// Only call calculate() on a different day-ish
-function runCalculation(){
+    } else{
 
+        exchangeRateData = JSON.parse(localStorage.getItem('fx_rates_data'));
 
-    if(true){
-        calculate();
+        console.log(`pulling from Cached API`);
+
     }
-}
 
-// if(day is different //boolean) calculate()
+    const rate = exchangeRateData [ currencyTo ];
+
+    displayRate.innerHTML = `1 USD is <span class="text-3xl">${rate.toFixed(2)} ${currencyTo}</span>`;
+    toAmount.value = ( rate * amountFrom ).toFixed(2);
+
+}
 
 // Event Listeners
 fromCurrency.addEventListener('change', calculate);
