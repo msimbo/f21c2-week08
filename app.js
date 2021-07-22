@@ -17,8 +17,13 @@ const chartContext = document.querySelector('#chart').getContext('2d');
  *
  * @returns {{}} - the exchange rate payload
  */
-async function fetchRateData(apiUrl){
+async function fetchRateData(apiUrl, init = {}){
     let fxData = {};
+    let config = init
+
+    // {
+       // 'fx_rates_data' :  fxData.rates
+    // }
 
     const response = await fetch(apiUrl);
     fxData = await response.json();
@@ -26,15 +31,12 @@ async function fetchRateData(apiUrl){
     // fxData = newRes.response;
 
     localStorage.setItem('fx_rates_data', JSON.stringify(fxData.rates));
+    // localStorage.setItem('init.name[fx_rates_data]', JSON.stringify(fxData.rates));
+    // config.forEach(configItem => localStorage.setItem(configItem[0], JSON.stringify(configItem[1]))  )
     localStorage.setItem('fx_last_updated_date', fxData.date);
 
     return fxData;
 }
-
-
-// setLocalStorage(key,value) // undefined | true | Exception
-
-// getLocalStorage(key) // {}
 
 /**
  * Displays
@@ -56,9 +58,12 @@ async function calculate(){
 
     const rate = exchangeRateData.rates [ currencyTo ];
 
+
+
     displayRate.innerHTML = `1 USD is <span class="text-3xl">${rate.toFixed(2)} ${currencyTo}</span>`;
     toAmount.value = ( rate * amountFrom ).toFixed(2);
 
+    drawChart(currencyTo)
 }
 
 // Event Listeners
@@ -72,19 +77,42 @@ toAmount.addEventListener('input', calculate);
 calculate();
 
 ////////
-const FXLabelData = ['2021-07-10', '2021-07-11', '2021-07-12', '2021-07-13']; //
-const FXRatesData = [0.24, 0.85, 0.76, 0.9]; //
+
+let timeseriesData  = {} //1
+
+// @TODO: refactor to work inside the `calculate()` function so it responds to all events
+async function drawChart(currencyTo){}
+// see below:
+
+fetchRateData(`${API_URL}/timeseries?base=USD&start_date=2020-01-01&end_date=2020-01-04`) //2
+    .then(response => {
+        console.log(response); // 4
+        
+        timeseriesData = response
+
+        const label = Object.keys(timeseriesData.rates)
+
+        //[{e},{},{},{}]
+        const rates =
+            Object.values(timeseriesData.rates)
+                .map(curr => curr['EUR'].toFixed(2)) // curr [ currencyTo ]
+
+        const FXChart = new Chart(chartContext, {
+            type: 'line',
+            data: {
+                labels: label,
+                datasets: [{
+                    label: `FX Rates for EUR`,
+                    data: rates,
+                }],
+                borderWidth: 1
+            }
+        });
+    })
+
+// console.log(timeseriesData); //3
+
+
 
 
 // for external ref: https://jsitor.com/qyh7W03iF
-const FXChart = new Chart(chartContext, {
-    type: 'line',
-    data: {
-        labels: FXLabelData,
-        datasets: [{
-            label: `FX Rates for EUR`,
-            data: FXRatesData,
-        }],
-        borderWidth: 1
-    }
-});
